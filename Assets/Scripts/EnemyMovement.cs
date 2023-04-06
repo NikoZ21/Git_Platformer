@@ -1,0 +1,32 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemyMovement : MonoBehaviour
+{
+    [SerializeField] float m_Speed = 1f;
+    Rigidbody2D m_RigidBody;
+
+
+    void Start()
+    {
+        m_RigidBody = GetComponent<Rigidbody2D>();
+    }
+
+    void Update()
+    {
+        m_RigidBody.velocity = new Vector2(m_Speed, 0f);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        m_Speed = -m_Speed;
+        FlipTheSprite();
+    }
+
+    private void FlipTheSprite()
+    {
+        transform.localScale = new Vector2(-Mathf.Sign(m_RigidBody.velocity.x), 1f);
+    }
+}
